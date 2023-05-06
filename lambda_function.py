@@ -2,8 +2,10 @@ import json
 from plugin_loader import load_plugin
 
 def lambda_handler(event, context):
-    message = event['message']
-    plugin_name = event['plugin']
+    
+    body = json.loads(event['body'])
+    message = body['message']
+    plugin_name = body['plugin']
     plugin = load_plugin(plugin_name)
     processed_message = plugin.process(message)
 

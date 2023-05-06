@@ -1,0 +1,10 @@
+{
+    "reverse": {
+        "module": "reverse_plugin",
+        "class": "ReversePlugin"
+    },
+    "capitalize": {
+        "module": "capitalize_plugin",
+        "class": "CapitalizePlugin"
+    }
+}

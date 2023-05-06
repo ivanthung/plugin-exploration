@@ -1,0 +1,38 @@
+name: Deploy Lambda
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  deploy_lambda:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt -t build/
+        cp -R . build/
+
+    - name: Package Lambda function
+      run: |
+        cd build
+        zip -r lambda_package.zip .
+
+    - name: Deploy to AWS Lambda
+      uses: appleboy/lambda-action@master
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: us-east-1
+        function_name: message-plugin-processor
+        zip_file: build/lambda_package.zip
