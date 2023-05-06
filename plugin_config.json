@@ -6,5 +6,10 @@
     "capitalize": {
         "module": "capitalize_plugin",
         "class": "CapitalizePlugin"
+    },
+
+    "eric": {
+        "module": "eric_plugin",
+        "class": "EricPlugin"
     }
 }

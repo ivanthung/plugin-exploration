@@ -10,7 +10,7 @@ PLUGIN_CONFIG = load_plugin_config()
 def load_plugin(plugin_name: str) -> 'MessagePlugin':
     try:
         plugin_info = PLUGIN_CONFIG[plugin_name]
-        plugin_module = importlib.import_module(plugin_info['module'])
+        plugin_module = importlib.import_module(f"plugins.{plugin_info['module']}")
         plugin_class = getattr(plugin_module, plugin_info['class'])
     except (KeyError, AttributeError, ModuleNotFoundError):
         raise Exception(f"Plugin {plugin_name} not found")
